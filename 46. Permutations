@@ -1,0 +1,25 @@
+class Solution {
+    List<List<Integer>> list=new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        compute(nums,0);
+        return list;
+    }
+    public void compute(int a[],int p){
+        if(p==a.length-1){
+            ArrayList<Integer> l=new ArrayList<>();
+            for(int i=0;i<a.length;i++)
+            l.add(a[i]);
+            list.add(l);
+            return;
+        }
+        for(int i=p;i<a.length;i++){
+            int t=a[p];
+            a[p]=a[i];
+            a[i]=t;
+            compute(a,p+1);
+            t=a[p];
+            a[p]=a[i];
+            a[i]=t;
+        }
+    }
+}
