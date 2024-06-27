@@ -1,0 +1,39 @@
+import java.util.List;
+import java.util.ArrayList;
+class Solution {
+    
+    public List<String> letterCombinations(String digits) {
+        List<String> list =new ArrayList<String>();
+        if(digits.length()==0)
+        return list;
+        String alpha="abcdefghijklmnopqrstuvwxyz";
+        HashMap<String,String> map=new HashMap<String,String>();
+        int n;
+        for(int i=2,j=0;i<=9;i++){
+            String s=alpha.substring(j,(i==7 || i==9)?j+4:j+3);
+            map.put(String.valueOf(i),s);
+            if(i==7)
+            j+=4;
+            else
+            j+=3;
+        }
+        String sub[]=new String[digits.length()];
+        for(int i=0;i<digits.length();i++){
+            sub[i]=map.get(digits.substring(i,i+1));
+        }
+        for(int i=0;i<sub[digits.length()-1].length();i++){
+            list.add(sub[digits.length()-1].substring(i,i+1));
+        }
+        for(int i=sub.length-2;i>=0;i--){
+            String al[]=new String[list.size()];
+                list.toArray(al);
+                list.clear();
+            for(int j=0;j<sub[i].length();j++){
+                for(int k=0;k<al.length;k++){
+                    list.add(sub[i].substring(j,j+1)+al[k]);
+                }
+            }
+        }
+        return list;
+    }
+}
