@@ -1,0 +1,27 @@
+class Solution {
+    List<List<Integer>> list = new ArrayList<>();
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        permute(nums,0);
+        return list;
+    }
+    public void permute(int a[],int p){
+        if(p==a.length-1){
+            List<Integer> l=new ArrayList<>();
+            for(int i=0;i<a.length;i++){
+                l.add(a[i]);
+            }
+            if(!list.contains(l))
+            list.add(l);
+            return;
+        }
+        for(int i=p;i<a.length;i++){
+            int t=a[p];
+            a[p]=a[i];
+            a[i]=t;
+            permute(a,p+1);
+            t=a[p];
+            a[p]=a[i];
+            a[i]=t;
+        }
+    }
+}
