@@ -23,11 +23,9 @@ class Solution {
             for(int i=0;i<4;i++){
                 int dx=p[0]+x[i];
                 int dy=p[1]+y[i];
-                if(dx>=0 && dx<n && dy>=0 && dy<m){
-                    if(mat[dx][dy]!=0 && !v[dx][dy]){
-                        q.add(new int[]{dx,dy,l+1});
-                        v[dx][dy]=true;
-                    }
+                if(dx>=0 && dx<n && dy>=0 && dy<m && !v[dx][dy]){
+                    q.add(new int[]{dx,dy,l+1});
+                    v[dx][dy]=true;
                 }
             }
         }
