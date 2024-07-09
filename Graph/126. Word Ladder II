@@ -1,0 +1,54 @@
+class Solution {
+    List<List<String>> result=new ArrayList<>();
+    HashMap<String,Integer> map=new HashMap<>();
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        if(!wordList.contains(endWord))
+        return result;
+        Set<String> s=new HashSet<>(wordList);
+        Queue<String> q=new LinkedList<>();
+        q.add(beginWord);
+        s.remove(beginWord);
+        map.put(beginWord,0);
+        int n=beginWord.length();
+        while(!q.isEmpty()){
+            String word=q.remove();
+            int steps=map.get(word);
+            if(word.equals(endWord))
+            break;
+            for(int i=0;i<n;i++){
+                for(char ch='a';ch<='z';ch++){
+                    String nstr=word.substring(0,i)+ch+word.substring(i+1,n);
+                    if(s.contains(nstr)){
+                        q.add(nstr);
+                        map.put(nstr,steps+1);
+                        s.remove(nstr);
+                    }
+                }
+            }
+        }
+        ArrayList<String> seq=new ArrayList<>();
+        seq.add(endWord);
+        if(map.containsKey(endWord))
+        checkseq(beginWord,endWord,seq);
+        return result;
+    }
+    public void checkseq(String start,String word,ArrayList<String> seq){
+        if(word.equals(start)){
+            ArrayList<String> t=new ArrayList<>(seq);
+            Collections.reverse(t);
+            result.add(t);
+            return;
+        }
+        int steps=map.get(word),n=word.length();
+        for(int i=0;i<n;i++){
+            for(char ch='a';ch<='z';ch++){
+                String nstr=word.substring(0,i)+ch+word.substring(i+1,n);
+                if(map.containsKey(nstr) && map.get(nstr)==steps-1){
+                    seq.add(nstr);
+                    checkseq(start,nstr,seq);
+                    seq.remove(seq.size()-1);
+                }
+            }
+        }
+    }
+}
