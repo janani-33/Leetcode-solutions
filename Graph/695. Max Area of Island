@@ -1,0 +1,30 @@
+class Solution {
+    int c=0;
+    public void bfs(boolean[][] v,int[][] grid,int i,int j,int n,int m){
+        v[i][j]=true;
+        c++;
+        int x[]={-1,1,0,0};
+        int y[]={0,0,-1,1};
+        for(int k=0;k<4;k++){
+            int dx=i+x[k];
+            int dy=j+y[k];
+            if(dx>=0 && dx<n && dy>=0 && dy<m && !v[dx][dy] && grid[dx][dy]==1)
+            bfs(v,grid,dx,dy,n,m);
+        }
+    }
+    public int maxAreaOfIsland(int[][] grid) {
+        int n=grid.length,m=grid[0].length,max=0;
+        boolean[][] v=new boolean[n][m];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(!v[i][j] && grid[i][j]==1){
+                    bfs(v,grid,i,j,n,m);
+                    if(max<c)
+                    max=c;
+                    c=0;
+                }
+            }
+        }
+        return max;
+    }
+}
