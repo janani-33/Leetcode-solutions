@@ -1,0 +1,45 @@
+class Solution {
+    public int lcm(HashSet<Integer> hs){
+        int n=hs.size(),val=1;
+        for(int i:hs)
+        val=findlcm(val,i);
+        return val;
+    }
+    public int findlcm(int a,int b){
+        return (a/gcd(a,b))*b;
+    }
+    public int gcd(int m,int n){
+        if(n==0)
+        return m;
+        return gcd(n,m%n);
+    }
+    public String fractionAddition(String exp) {
+        int n=exp.length(),cur=0;
+        ArrayList<Integer> num=new ArrayList<>();
+        ArrayList<Integer> den=new ArrayList<>();
+        for(int i=1;i<n;i++){
+            char ch=exp.charAt(i);
+            if(ch=='+' || ch=='-'){
+                String ft[]=(exp.substring(cur,i)).split("/");
+                num.add(Integer.parseInt(ft[0]));
+                den.add(Integer.parseInt(ft[1]));
+                cur=i;
+            }
+            else if(i==n-1){
+                String ft[]=(exp.substring(cur,n)).split("/");
+                num.add(Integer.parseInt(ft[0]));
+                den.add(Integer.parseInt(ft[1]));
+            }
+        }
+        int m=num.size();
+        if(m==1)
+        return exp;
+        int l=lcm(new HashSet<>(den));
+        int sum=0,dres=l;
+        for(int i=0;i<m;i++)
+        sum+=num.get(i)*(l/den.get(i));
+        int div=gcd(l,Math.abs(sum));
+        String res=String.valueOf(sum/div)+"/"+String.valueOf(l/div);
+        return res;
+    }
+}
