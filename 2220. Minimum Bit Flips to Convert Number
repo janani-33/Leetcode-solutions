@@ -1,0 +1,7 @@
+class Solution {
+    public int minBitFlips(int start, int goal) {
+        int val=start^goal;
+        int res=Integer.bitCount(val);
+        return res;
+    }
+}
